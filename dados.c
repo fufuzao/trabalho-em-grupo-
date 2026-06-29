@@ -15,18 +15,41 @@ typedef struct
     int quantidadeDisponivel;
     int id;
 } livro;
+livro books[MAX_LIVROS];
 typedef struct
 {
     char nome[50];
     char email[100];
     int telefone;
     int id;
-    livro;
+    livro livroAlocado[MAX_LIVROS];
 } usuario;
-
-awd
-livro books[MAX_LIVROS];
 usuario user[MAX_USUARIOS];
 
+// Prototipos
+int menuPrincipal();
+void limpa();
+void limparBufferEntrada();
 
+// Main
+int main()
+{
+    printf("main");
+    return 0;
+}
 
+// Funcoes
+
+void limpa()
+{
+    system("cls");
+    system("clear");
+}
+void limparBufferEntrada()
+{
+    int c;
+
+    while ((c = getchar()) != '\n' && c != EOF)
+    {
+    }
+}
