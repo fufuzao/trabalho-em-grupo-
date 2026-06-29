@@ -24,7 +24,7 @@ typedef struct
     livro;
 } usuario;
 
-
+awd
 livro books[MAX_LIVROS];
 usuario user[MAX_USUARIOS];
 
