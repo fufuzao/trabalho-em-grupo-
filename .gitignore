@@ -1,0 +1,48 @@
+# Executaveis gerados em C
+*.exe
+*.out
+*.app
+
+# Arquivos objeto e compilacao
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Arquivos temporarios
+*.tmp
+*.temp
+*.log
+
+# Pastas de build
+build/
+bin/
+obj/
+Debug/
+Release/
+dist/
+output/
+
+# VS Code
+.vscode/
+!.vscode/settings.json.example
+
+# Code Runner
+*.code-workspace
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Backups/arquivos antigos
+*.bak
+*.old
+*.orig
+
+# Arquivos de teste locais
+teste.exe
+main.exe
+programa.exe
