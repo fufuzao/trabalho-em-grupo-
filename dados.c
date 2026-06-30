@@ -94,4 +94,4 @@ void limparBufferEntrada()
     {
     }
 }
-
+void estruturaDaMain()
