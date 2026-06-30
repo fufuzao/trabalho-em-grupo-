@@ -34,7 +34,9 @@ int livrosTotais, pessoasTotais;
 void menuPrincipal();
 void menuGerenciarLivros();
 void limpa();
+void pausarTela();
 void limparBufferEntrada();
+void estruturaDaMain();
 
 // Main
 int main()
@@ -51,7 +53,6 @@ void menuPrincipal()
     printf("2 - Gerenciar Usuarios\n");
     printf("3 - Emprestimos\n");
     printf("4 - Relatorios\n");
-    printf("5 - Excluir Livro\n");
     printf("0 - Voltar ao Menu Principal\n");
     printf("Escolha: ");
 }
@@ -86,6 +87,12 @@ void limpa()
     system("clear");
 }
 
+void pausarTela()
+{
+    printf("\nPressione ENTER para continuar...");
+    getchar();
+}
+
 void limparBufferEntrada()
 {
     int c;
@@ -95,3 +102,46 @@ void limparBufferEntrada()
     }
 }
 void estruturaDaMain()
+{
+    int opcao = 0;
+    enum
+    {
+        sair = 0,
+        modulo1 = 1,
+        modulo2 = 2,
+        modulo3 = 3
+    };
+        menuPrincipal ();
+        do
+        { 
+        scanf (&opcao);
+            swicth (opcao)
+            { 
+                case modulo1:
+            
+                    pausarTela();
+                
+                break;
+                
+                case modulo2:
+            
+                    pausarTela();
+                
+                break:
+                
+                case modulo3:
+            
+                    pausarTela();
+                
+                break;
+
+                case default:
+
+                    printf(" Escolha uma alternativa existente");
+                    pausarTela();
+
+                break;
+                
+            }
+    } while (opcao != sair);
+}
