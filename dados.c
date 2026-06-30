@@ -28,6 +28,7 @@ usuario user[MAX_USUARIOS];
 
 // Prototipos
 int menuPrincipal();
+void menuGerenciarLivros();
 void limpa();
 void limparBufferEntrada();
 
@@ -53,3 +54,5 @@ void limparBufferEntrada()
     {
     }
 }
+void menuGerenciarLivros(){}
+    

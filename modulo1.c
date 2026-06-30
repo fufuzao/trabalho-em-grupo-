@@ -24,15 +24,7 @@ void modulo1() {
     int opcao2;
 
     do {
-        printf("\n============ BIBLIOTECA ============\n");
-        printf("1 - Cadastrar Livro\n");
-        printf("2 - Listar Livros\n");
-        printf("3 - Buscar Livro\n");
-        printf("4 - Alterar Livro\n");
-        printf("5 - Excluir Livro\n");
-        printf("0 - Voltar ao Menu Principal\n");
-        printf("Escolha: ");
-        scanf("%d", &opcao2);
+
     
         
         switch(opcao2) {
