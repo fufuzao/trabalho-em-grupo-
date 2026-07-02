@@ -42,6 +42,12 @@ int BuscarId(int idBusca);
 void Buscar();
 void Listar();
 char BuscarTítulo(char LivroBusca[50]);
+void cadastroTitulo();
+void cadastroAutor();
+int cadastroCategoria();
+void cadastroAno();
+void cadastroQuantidade();
+void cadastroQuantidadeDisponível();
 
 // Main
 int main()
@@ -118,14 +124,14 @@ void cadastroTitulo()
 
 void cadastroAutor()
 {
-
+//Cadastro básico de autor com printf e guardando na struct
     printf("\nDigite o nome do autor: ");
     fgets(books[livrosTotais].autor, 100, stdin);
 }
 
-void cadastroCategoria()
+int cadastroCategoria()
 {
-
+//Cadastro de uma em 15 categorias dando valor para a variável e definindo com o número da opção do usuário
     int opcao;
 
     printf("\n============ CATEGORIAS ============\n");
@@ -147,7 +153,7 @@ void cadastroCategoria()
     printf("0 - Sair\n");
 
     printf("Escolha: ");
-    scanf("%d", opcao);
+    scanf("%d",&opcao);
 
     if (opcao == 1)
     {
@@ -239,7 +245,7 @@ void cadastroCategoria()
         books->categoria = 15;
         printf("\nPoesia");
     }
-    if (opcao == 0)
+    if (opcao != 0)
     {
 
         return 0;
@@ -255,14 +261,14 @@ void cadastroAno()
 {
 
     printf("\nDigite o ano do seu livro: ");
-    fgets(books[livrosTotais].ano, 100, stdin);
+    scanf("%d",books[livrosTotais].ano);
 }
 
 void cadastroQuantidade()
 {
 
     printf("\nDigite a sua quantidade: ");
-    fgets(books[livrosTotais].autor, 100, stdin);
+    scanf("%d",books[livrosTotais].quantidade);
 }
 
 void cadastroQuantidadeDisponível()
@@ -273,13 +279,13 @@ void cadastroQuantidadeDisponível()
 
 void cadastroGeral()
 {
-
-    cadastroTitulo;
-    cadastroAutor;
-    cadastroCategoria;
-    cadastroAno;
-    cadastroQuantidade;
-    cadastroQuantidadeDisponível;
+//Cadastro geral contendo todas as funções anteriores e chamando apenas ele na Main
+    cadastroTitulo();
+    cadastroAutor();
+    cadastroCategoria();
+    cadastroAno();
+    cadastroQuantidade();
+    cadastroQuantidadeDisponível();
 
     IDdoLivro++;
     books[livrosTotais].id++;
@@ -299,7 +305,7 @@ int BuscarId(int idBusca)
 {
 
     printf("\nQual o ID do seu livro");
-    scanf("%d", idBusca);
+    scanf("%d",&idBusca);
 
     for (int i = 0; i > livrosTotais; i++)
     {
@@ -344,15 +350,15 @@ void Alterar(){
     int idBusca, encontrado =0;
 
 printf("Digite o ID do livro que deseja alterar:");
-scanf("%d",idBusca);
+scanf("%d",&idBusca);
 
 limparBufferEntrada();
 
     for(int i = 0; i < livrosTotais; i++){
-
+    encontrado = 1;
 
         if(books[i].id==idBusca){
-
+        encontrado = 1;
             printf("\nO livro foi encontrado agora insira os novos dados: ");
 
             printf("\nNovo título: ");
@@ -362,17 +368,43 @@ limparBufferEntrada();
             fgets(books[i].autor,100,stdin);
 
             printf("\nNovo ano: ");
-            scanf("%d",books[i].ano);
+            scanf("%d",&books[i].ano);
 
             printf("\nNova categoria: ");
-            scanf("%d",books[i].categoria);
+            scanf("%d",&books[i].categoria);
 
             printf("\nNova quantidade total: ");
-            scanf("%d",books[i].quantidade);
+            scanf("%d",&books[i].quantidade);
 
 
             books[i].quantidade = books[i].quantidadeDisponivel;
 
+        }
+
+    }
+
+}
+
+void excluir(){
+
+int idBusca, encontrado =0;
+
+printf("Digite o ID de busca: ");
+scanf("%d",&idBusca);
+
+limparBufferEntrada();
+
+    for(int i = 0; i < livrosTotais; i++){
+
+        if(books->id == idBusca){
+        encontrado = 1;
+
+            books[i] = books[livrosTotais - 1];
+
+            livrosTotais --;
+
+            printf("Livro excluido");
+            break;
         }
 
     }
