@@ -682,3 +682,5 @@ void usuariosCadastrados ()
     pausarTela();
 
 }
+
+// haaaaaaaaaaaaa to ficando loco
