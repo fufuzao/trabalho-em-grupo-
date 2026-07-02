@@ -147,7 +147,7 @@ void estruturaDaMain ()
                 break;
                 
             }
-    } while (opcao != sair);
+    }while (opcao != sair);
 }
 
 void subMenuRelatorio ()
@@ -185,7 +185,7 @@ void relatorioUsuario ()
             case cadastros:
                 limpa();
             break;
-
+                
             case emprestimos:
                 limpa();
             break;
@@ -221,6 +221,16 @@ void relatorioLivro ()
 
 void usuariosCadastrados ()
 {
+    if(usuariosTotais == 0){
+        printf ("\nNenhum usuario cadastrado!");
+        printf ("\n+===================================+\n");
+        printf("==== Pressione enter para sair ====");
+        printf ("\n+===================================+\n");
+        pausarTela ();
+        
+        return;
+    }
+    
     printf ("\n+============ RELATORIO ============+\n");
     printf ("| %2.d |   Usuarios Registrados     |", usuariosTotais);
     printf ("\n+===================================+\n");
