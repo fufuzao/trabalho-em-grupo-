@@ -1,0 +1,8 @@
+#ifndef CONSTANTES_H
+#define CONSTANTES_H
+
+#define MAX_LIVROS 100
+#define MAX_USUARIOS 50
+#define MAX_EMPRESTIMOS 200
+
+#endif
