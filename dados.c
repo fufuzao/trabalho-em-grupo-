@@ -76,7 +76,6 @@ int main ()
 
 // Funcoes
 void menuPrincipal()
-void menuPrincipal ()
 {
     printf("\n============ BIBLIOTECA ============\n");
     printf("1 - Gerenciar Livros\n");
@@ -143,7 +142,7 @@ void limpa ()
 }
 
 void limparBufferEntrada()
-void pausarTela ()
+void pausarTela ();
 {
     printf("\nPressione ENTER para continuar...");
     getchar();
@@ -178,9 +177,6 @@ void cadastroAutor()
     printf("\nDigite o nome do autor: ");
     fgets(books[livrosTotais].autor, 100, stdin);
 }
-
-void cadastroCategoria()
-{
 
 int cadastroCategoria()
 {
@@ -336,13 +332,6 @@ void cadastroQuantidadeDisponível()
 
 void cadastroGeral()
 {
-
-    cadastroTitulo;
-    cadastroAutor;
-    cadastroCategoria;
-    cadastroAno;
-    cadastroQuantidade;
-    cadastroQuantidadeDisponível;
 //Cadastro geral contendo todas as funções anteriores e chamando apenas ele na Main
     cadastroTitulo();
     cadastroAutor();
@@ -467,16 +456,34 @@ void emprestimos (){
     int i,f,opcao;
 
 
-    menudeemprestimos();
+    menudeemprestimos(opcao);
     scanf("%d",opcao);
 
     switch (opcao)
     {
     case 1:
 
-            char 
-            printf("titulo do livreo que vocer quer cadastrar: ")
-            scanf("");
+            char livroalugado [100];
+            int livroalugado1;
+             
+            
+            listar ();
+            printf("titulo do livreo que vocer quer cadastrar: ");
+            fgets(livroalugado, 100, stdin);
+           
+    
+            if(strcmp(livrosTotais == livroalugado)=1){
+            livroalugado1++;
+            }
+            
+
+
+
+
+
+
+
+            
 
 
         break;
@@ -497,11 +504,11 @@ void emprestimos (){
     default:
         break;
     }
-
+}
 
 void excluir(){
 
-int idBusca, encontrado =0;
+int idBusca, encontrado = 0;
 
 printf("Digite o ID de busca: ");
 scanf("%d",&idBusca);
@@ -522,6 +529,7 @@ limparBufferEntrada();
         }
 
     }
+}
 void estruturaDaMain ()
 {
     int opcao = 0;
@@ -683,4 +691,3 @@ void usuariosCadastrados ()
 
 }
 
-// haaaaaaaaaaaaa to ficando loco
