@@ -31,6 +31,17 @@ typedef struct
 } usuario;
 usuario user[MAX_USUARIOS];
 
+
+typedef struct
+{
+    int idUsuario;
+    int idLivro;
+    int ativo; 
+} Emprestimo;
+
+Emprestimo emprestimos[MAX_EMPRESTIMOS];
+
+
 // Variaveis
 int livrosTotais, pessoasTotais, IDdoLivro, emprestimostotais;
 int livrosTotais, pessoasTotais, IDdoLivro;
@@ -65,6 +76,12 @@ void limparBufferEntrada ();
 void estruturaDaMain ();
 void relatorioLivro ();
 void relatorioUsuario ();
+int localizarLivro(int idLivro); // vinicius
+int localizarUsuario(int idUsuario); // vinicius
+void registrarEmprestimo(); // vinicius
+void devolverLivro(); // vinicius
+void listarEmprestimos(); // vinicius
+
 
 // Main
 int main ()
@@ -142,11 +159,11 @@ void limpa ()
 }
 
 void limparBufferEntrada()
-void pausarTela ();
-{
+void pausarTela (){
     printf("\nPressione ENTER para continuar...");
     getchar();
 }
+
 
 void limparBufferEntrada ()
 {
@@ -439,72 +456,238 @@ limparBufferEntrada();
 }
 
 
-void menudeemprestimo(){
-
-     printf("\n============ GERENCIAMENTO DE EMPRESTIMOS ============\n");
-    printf("1 - Cadastrar emprestimo \n");
-    printf("2 - Meus livros\n");
-    printf("3 - Busca livros \n");
-    printf("4 - livros disponiveis \n");
-    printf("Escolha: ");
-
+// menu de emprestimos 
+void menudeemprestimo()
+{
+    printf("\n===== EMPRESTIMOS =====\n");
+    printf("1 - Realizar emprestimo\n");
+    printf("2 - Devolver livro\n");
+    printf("3 - Listar emprestimos\n");
+    printf("0 - Voltar\n");
 }
 
 
-void emprestimos (){
-
-    int i,f,opcao;
-
-
-    menudeemprestimos(opcao);
-    scanf("%d",opcao);
-
-    switch (opcao)
+//usa o id do livro criado para conseguir fazer as buscas
+int localizarLivro(int idLivro)
+{
+    for(int i = 0; i < livrosTotais; i++)
     {
-    case 1:
+        if(books[i].id == idLivro)
+        {
+            return i;
+        }
+    }
 
-            char livroalugado [100];
-            int livroalugado1;
-             
-            
-            listar ();
-            printf("titulo do livreo que vocer quer cadastrar: ");
-            fgets(livroalugado, 100, stdin);
-           
-    
-            if(strcmp(livrosTotais == livroalugado)=1){
-            livroalugado1++;
+    return -1;
+}
+
+
+// usa o id do usuario para localizar o mesmo 
+int localizarUsuario(int idUsuario)
+{
+    for(int i = 0; i < usuariosTotais; i++)
+    {
+        if(user[i].id == idUsuario)
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+
+// registro de emprestimo ou pra mim um desafio gigante 
+
+void registrarEmprestimo()
+{
+    int idUsuario;
+    int idLivro;
+
+    // Verifica limite de emprestimos
+    if(emprestimostotais >= MAX_EMPRESTIMOS)
+    {
+        printf("\nLimite de emprestimos atingido!");
+        return;
+    }
+
+    printf("\nID do usuario: ");
+    scanf("%d", &idUsuario);
+
+    printf("ID do livro: ");
+    scanf("%d", &idLivro);
+
+    int posUsuario = localizarUsuario(idUsuario);
+    int posLivro = localizarLivro(idLivro);
+
+    // Verifica se o usuario existe
+    if(posUsuario == -1)
+    {
+        printf("\nUsuario nao encontrado!");
+        return;
+    }
+
+    // Verifica se o livro existe
+    if(posLivro == -1)
+    {
+        printf("\nLivro nao encontrado!");
+        return;
+    }
+
+    // Verifica disponibilidade do livro
+    if(books[posLivro].quantidadeDisponivel <= 0)
+    {
+        printf("\nNao existe exemplar disponivel!");
+        return;
+    }
+
+    // Verifica se o usuario ja possui este livro emprestado
+    for(int i = 0; i < emprestimostotais; i++)
+    {
+        if(emprestimos[i].idUsuario == idUsuario &&
+           emprestimos[i].idLivro == idLivro &&
+           emprestimos[i].ativo == 1)
+        {
+            printf("\nEste usuario ja possui esse livro!");
+            return;
+        }
+    }
+
+    // Registra emprestimo
+    emprestimos[emprestimostotais].idUsuario = idUsuario;
+    emprestimos[emprestimostotais].idLivro = idLivro;
+    emprestimos[emprestimostotais].ativo = 1;
+
+    emprestimostotais++;
+
+    // Atualiza quantidade disponivel
+    books[posLivro].quantidadeDisponivel--;
+
+    // Marca usuario com emprestimo ativo
+    user[posUsuario].emprestimo = 1;
+
+    printf("\n=================================");
+    printf("\nEmprestimo realizado com sucesso!");
+    printf("\nUsuario ID: %d", idUsuario);
+    printf("\nLivro ID: %d", idLivro);
+    printf("\nExemplares restantes: %d",
+           books[posLivro].quantidadeDisponivel);
+    printf("\n=================================\n");
+}
+
+
+
+
+
+void devolverLivro()
+{
+    int idUsuario;
+    int idLivro;
+
+    printf("\nID do usuario: ");
+    scanf("%d", &idUsuario);
+
+    printf("ID do livro: ");
+    scanf("%d", &idLivro);
+
+    for(int i = 0; i < emprestimostotais; i++)
+    {
+        if(emprestimos[i].idUsuario == idUsuario &&
+           emprestimos[i].idLivro == idLivro &&
+           emprestimos[i].ativo == 1)
+        {
+            emprestimos[i].ativo = 0;
+
+            int posLivro = localizarLivro(idLivro);
+
+            if(posLivro != -1)
+            {
+                books[posLivro].quantidadeDisponivel++;
             }
-            
+
+            int posUsuario = localizarUsuario(idUsuario);
+
+            if(posUsuario != -1)
+            {
+                user[posUsuario].emprestimo = 0;
+            }
+
+            printf("\n=================================");
+            printf("\nLivro devolvido com sucesso!");
+            printf("\nUsuario ID: %d", idUsuario);
+            printf("\nLivro ID: %d", idLivro);
+
+            if(posLivro != -1)
+            {
+                printf("\nExemplares disponiveis: %d",
+                       books[posLivro].quantidadeDisponivel);
+            }
+
+            printf("\n=================================\n");
+
+            return;
+        }
+    }
+
+    printf("\nEsse emprestimo nao existe!");
+}
 
 
 
 
+void listarEmprestimos()
+{
+    printf("\n===== EMPRESTIMOS ATIVOS =====\n");
 
+    for(int i = 0; i < emprestimostotais; i++)
+    {
+        if(emprestimos[i].ativo == 1)
+        {
+            printf("\nUsuario ID: %d",
+                   emprestimos[i].idUsuario);
 
-
-            
-
-
-        break;
-
-        case 2 :
-        
-        break;
-
-        case 3 :
-
-        break;
-
-
-        case 4 :
-
-
-        break;
-    default:
-        break;
+            printf("\nLivro ID: %d\n",
+                   emprestimos[i].idLivro);
+        }
     }
 }
+
+
+void emprestimos()
+{
+    int opcao;
+
+    do
+    {
+        menudeemprestimo();
+        scanf("%d", &opcao);
+
+        switch(opcao)
+        {
+            case 1:
+                registrarEmprestimo();
+                break;
+
+            case 2:
+                devolverLivro();
+                break;
+
+            case 3:
+                listarEmprestimos();
+                break;
+
+            case 0:
+                break;
+
+            default:
+                printf("\nOpcao invalida!");
+        }
+
+    }while(opcao != 0);
+}
+
+
+   
 
 void excluir(){
 
