@@ -31,7 +31,7 @@ typedef struct
 } usuario;
 usuario user[MAX_USUARIOS];
 
-
+//struct emprestimo 
 typedef struct
 {
     int idUsuario;
@@ -159,6 +159,7 @@ void limpa ()
 }
 
 void limparBufferEntrada()
+
 void pausarTela (){
     printf("\nPressione ENTER para continuar...");
     getchar();
@@ -338,18 +339,23 @@ void cadastroQuantidade()
 
     printf("\nDigite a sua quantidade: ");
     fgets(books[livrosTotais].autor, 100, stdin);
-    scanf("%d",books[livrosTotais].quantidade);
+    scanf("%d",&books[livrosTotais].quantidade);
 }
 
-void cadastroQuantidadeDisponível()
-{
+void cadastroQuantidadeDisponível(){
+    books[livrosTotais].quantidadeDisponivel = books[livrosTotais].quantidade;
 
-    // não sei
+    books[livrosTotais].quantidadeindisponivel = 0;
+
+    printf("\nQuantidade total: %d",books[livrosTotais].quantidade);
+
+    printf("\nQuantidade disponivel: %d",books[livrosTotais].quantidadeDisponivel);
 }
 
+//Cadastro geral contendo todas as funções anteriores e chamando apenas ele na Main
 void cadastroGeral()
 {
-//Cadastro geral contendo todas as funções anteriores e chamando apenas ele na Main
+
     cadastroTitulo();
     cadastroAutor();
     cadastroCategoria();
@@ -578,7 +584,7 @@ void registrarEmprestimo()
 
 
 
-
+// devoluçao de livro
 void devolverLivro()
 {
     int idUsuario;
@@ -634,7 +640,7 @@ void devolverLivro()
 
 
 
-
+// lista todos os emprestimos feitos
 void listarEmprestimos()
 {
     printf("\n===== EMPRESTIMOS ATIVOS =====\n");
@@ -652,7 +658,7 @@ void listarEmprestimos()
     }
 }
 
-
+//é tipo uma main de empretimo onde so precia chamar ele na int main
 void emprestimos()
 {
     int opcao;
@@ -688,6 +694,8 @@ void emprestimos()
 
 
    
+
+
 
 void excluir(){
 
