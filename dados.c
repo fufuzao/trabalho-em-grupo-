@@ -44,7 +44,6 @@ Emprestimo emprestimos[MAX_EMPRESTIMOS];
 
 // Variaveis
 int livrosTotais, pessoasTotais, IDdoLivro, emprestimostotais;
-int livrosTotais, pessoasTotais, IDdoLivro;
 
 // Prototipos
 void menuPrincipal();
@@ -158,16 +157,13 @@ void limpa ()
     system("clear");
 }
 
-void limparBufferEntrada()
-
 void pausarTela (){
     printf("\nPressione ENTER para continuar...");
     getchar();
 }
 
 
-void limparBufferEntrada ()
-{
+void limparBufferEntrada (){
     int c;
 
     while ((c = getchar()) != '\n' && c != EOF)
@@ -176,8 +172,7 @@ void limparBufferEntrada ()
 }
 void estruturaDaMain() {}
 
-void cadastroTitulo()
-{
+void cadastroTitulo(){
     if (livrosTotais >= MAX_LIVROS)
     {
 
@@ -188,16 +183,14 @@ void cadastroTitulo()
     fgets(books[livrosTotais].titulo, 100, stdin);
 }
 
-void cadastroAutor()
-{
+void cadastroAutor(){
 
 //Cadastro básico de autor com printf e guardando na struct
     printf("\nDigite o nome do autor: ");
     fgets(books[livrosTotais].autor, 100, stdin);
 }
 
-int cadastroCategoria()
-{
+int cadastroCategoria(){
 //Cadastro de uma em 15 categorias dando valor para a variável e definindo com o número da opção do usuário
     int opcao;
 
@@ -220,7 +213,7 @@ int cadastroCategoria()
     printf("0 - Sair\n");
 
     printf("Escolha: ");
-    scanf("%d", opcao);
+    scanf("%d",&opcao);
     scanf("%d",&opcao);
 
     if (opcao == 1)
@@ -326,16 +319,14 @@ int cadastroCategoria()
     printf("\nOpção inexistente escolha uma entre 0 e 15");
 }
 
-void cadastroAno()
-{
+void cadastroAno(){
 
     printf("\nDigite o ano do seu livro: ");
     fgets(books[livrosTotais].ano, 100, stdin);
-    scanf("%d",books[livrosTotais].ano);
+    scanf("%d",&books[livrosTotais].ano);
 }
 
-void cadastroQuantidade()
-{
+void cadastroQuantidade(){
 
     printf("\nDigite a sua quantidade: ");
     fgets(books[livrosTotais].autor, 100, stdin);
@@ -353,8 +344,7 @@ void cadastroQuantidadeDisponível(){
 }
 
 //Cadastro geral contendo todas as funções anteriores e chamando apenas ele na Main
-void cadastroGeral()
-{
+void cadastroGeral(){
 
     cadastroTitulo();
     cadastroAutor();
@@ -367,18 +357,16 @@ void cadastroGeral()
     books[livrosTotais].id++;
 }
 
-void Listar()
-{
+void Listar(){
 
-    for (int i = 0; i = MAX_LIVROS; i++)
+    for (int i = 0; i < MAX_LIVROS; i++)
     {
 
-        printf("%d ", books[livrosTotais].titulo);
+        printf("%s ", books[i].titulo);
     }
 }
 
-int BuscarId(int idBusca)
-{
+int BuscarId(int idBusca){
 
     printf("\nQual o ID do seu livro");
     scanf("%d",&idBusca);
@@ -394,8 +382,7 @@ int BuscarId(int idBusca)
     }
 }
 
-char BuscarTítulo(char LivroBusca[50])
-{
+char BuscarTítulo(char LivroBusca[50]){
 
     printf("\nQual o Título do livro que você deseja procurar");
     fgets(LivroBusca, 50, stdin);
@@ -463,8 +450,7 @@ limparBufferEntrada();
 
 
 // menu de emprestimos 
-void menudeemprestimo()
-{
+void menudeemprestimo(){
     printf("\n===== EMPRESTIMOS =====\n");
     printf("1 - Realizar emprestimo\n");
     printf("2 - Devolver livro\n");
@@ -474,8 +460,7 @@ void menudeemprestimo()
 
 
 //usa o id do livro criado para conseguir fazer as buscas
-int localizarLivro(int idLivro)
-{
+int localizarLivro(int idLivro){
     for(int i = 0; i < livrosTotais; i++)
     {
         if(books[i].id == idLivro)
@@ -489,8 +474,7 @@ int localizarLivro(int idLivro)
 
 
 // usa o id do usuario para localizar o mesmo 
-int localizarUsuario(int idUsuario)
-{
+int localizarUsuario(int idUsuario){
     for(int i = 0; i < usuariosTotais; i++)
     {
         if(user[i].id == idUsuario)
@@ -503,10 +487,9 @@ int localizarUsuario(int idUsuario)
 }
 
 
-// registro de emprestimo ou pra mim um desafio gigante 
 
-void registrarEmprestimo()
-{
+// registro de emprestimo ou pra mim um desafio gigante 
+void registrarEmprestimo(){
     int idUsuario;
     int idLivro;
 
@@ -585,8 +568,7 @@ void registrarEmprestimo()
 
 
 // devoluçao de livro
-void devolverLivro()
-{
+void devolverLivro(){
     int idUsuario;
     int idLivro;
 
@@ -641,8 +623,7 @@ void devolverLivro()
 
 
 // lista todos os emprestimos feitos
-void listarEmprestimos()
-{
+void listarEmprestimos(){
     printf("\n===== EMPRESTIMOS ATIVOS =====\n");
 
     for(int i = 0; i < emprestimostotais; i++)
@@ -659,8 +640,7 @@ void listarEmprestimos()
 }
 
 //é tipo uma main de empretimo onde so precia chamar ele na int main
-void emprestimos()
-{
+void emprestimos(){
     int opcao;
 
     do
@@ -863,8 +843,7 @@ void usuariosCadastrados ()
 
 }
 
-void usuariosCadastrados ()
-{
+void usuariosCadastrados (){
     printf ("\n+============ RELATORIO ============+\n");
     printf ("| %2.d |   Usuarios com Emprestimos |", usuariosTotais);
     printf ("\n+===================================+\n");
