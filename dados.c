@@ -56,7 +56,7 @@ void Buscar();
 void Listar();
 char BuscarTítulo(char LivroBusca[50]);
 void menudeemprestimo ();
-void emprestimos();
+void emprestimos1();
 void cadastroTitulo();
 void cadastroAutor();
 int cadastroCategoria();
@@ -127,29 +127,7 @@ void menuGerenciarUsuarios()
     printf("Escolha: ");
 }
 
-void menuGerenciarLivros ()
-{
-    printf("\n============ GERENCIAMENTO DE LIVROS ============\n");
-    printf("1 - Cadastrar Livro\n");
-    printf("2 - Listar Livros\n");
-    printf("3 - Buscar Livro\n");
-    printf("4 - Alterar Livro\n");
-    printf("5 - Excluir Livro\n");
-    printf("0 - Voltar ao Menu Principal\n");
-    printf("Escolha: ");
-}
 
-void menuGerenciarUsuarios ()
-{
-    printf("\n============ GERENCIAMENTO DE LIVROS ============\n");
-    printf("1 - Cadastrar novo Usuario\n");
-    printf("2 - Listar Usuarios\n");
-    printf("3 - Buscar Usuario\n");
-    printf("4 - Alterar Cadastro\n");
-    printf("5 - Excluir Cadastro\n");
-    printf("0 - Voltar ao Menu Principal\n");
-    printf("Escolha: ");
-}
 
 void limpa ()
 {
@@ -533,9 +511,7 @@ void registrarEmprestimo(){
     // Verifica se o usuario ja possui este livro emprestado
     for(int i = 0; i < emprestimostotais; i++)
     {
-        if(emprestimos[i].idUsuario == idUsuario &&
-           emprestimos[i].idLivro == idLivro &&
-           emprestimos[i].ativo == 1)
+        if(emprestimos[i].idUsuario == idUsuario && emprestimos[i].idLivro == idLivro && emprestimos[i].ativo == 1)
         {
             printf("\nEste usuario ja possui esse livro!");
             return;
@@ -559,8 +535,7 @@ void registrarEmprestimo(){
     printf("\nEmprestimo realizado com sucesso!");
     printf("\nUsuario ID: %d", idUsuario);
     printf("\nLivro ID: %d", idLivro);
-    printf("\nExemplares restantes: %d",
-           books[posLivro].quantidadeDisponivel);
+    printf("\nExemplares restantes: %d",books[posLivro].quantidadeDisponivel);
     printf("\n=================================\n");
 }
 
@@ -569,20 +544,20 @@ void registrarEmprestimo(){
 
 // devoluçao de livro
 void devolverLivro(){
-    int idUsuario;
-    int idLivro;
 
+    int idUsuario,idLivro;
+
+  
     printf("\nID do usuario: ");
-    scanf("%d", &idUsuario);
-
+   scanf("%d", &idUsuario);
+   
     printf("ID do livro: ");
     scanf("%d", &idLivro);
+    
 
     for(int i = 0; i < emprestimostotais; i++)
     {
-        if(emprestimos[i].idUsuario == idUsuario &&
-           emprestimos[i].idLivro == idLivro &&
-           emprestimos[i].ativo == 1)
+        if(emprestimos[i].idUsuario == idUsuario && emprestimos[i].idLivro == idLivro &&emprestimos[i].ativo == 1)
         {
             emprestimos[i].ativo = 0;
 
@@ -608,7 +583,7 @@ void devolverLivro(){
             if(posLivro != -1)
             {
                 printf("\nExemplares disponiveis: %d",
-                       books[posLivro].quantidadeDisponivel);
+books[posLivro].quantidadeDisponivel);
             }
 
             printf("\n=================================\n");
@@ -630,17 +605,15 @@ void listarEmprestimos(){
     {
         if(emprestimos[i].ativo == 1)
         {
-            printf("\nUsuario ID: %d",
-                   emprestimos[i].idUsuario);
+            printf("\nUsuario ID: %d",emprestimos[i].idUsuario);
 
-            printf("\nLivro ID: %d\n",
-                   emprestimos[i].idLivro);
+            printf("\nLivro ID: %d\n",emprestimos[i].idLivro);
         }
     }
 }
 
 //é tipo uma main de empretimo onde so precia chamar ele na int main
-void emprestimos(){
+void emprestimos1(){
     int opcao;
 
     do
