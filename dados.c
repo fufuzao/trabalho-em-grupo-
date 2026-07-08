@@ -43,7 +43,7 @@ Emprestimo emprestimos[MAX_EMPRESTIMOS];
 
 
 // Variaveis
-int livrosTotais, usuariosTotais, IDdoLivro, emprestimostotais;
+int livrosTotais, usuariosTotais, IDdoLivro, IDdoUsuario, emprestimostotais;
 
 // Prototipos
 void menuPrincipal();
@@ -79,6 +79,13 @@ void devolverLivro(); // vinicius
 void listarEmprestimos(); // vinicius
 void usuariosCadastrados();
 void usuariosComEmprestimo();
+void cadastroUsuario();
+void listarUsuarios();
+void buscarUsuario();
+void alterarUsuario();
+void excluirUsuario();
+void gerenciarLivros();
+void gerenciarUsuarios();
 
 
 // Main
@@ -725,7 +732,162 @@ void gerenciarLivros()
     } while (opcao != 0);
 }
 
-// Submenu de usuarios - o cadastro de usuario ainda nao foi implementado
+// Cadastra um novo usuario
+void cadastroUsuario()
+{
+    if (usuariosTotais >= MAX_USUARIOS)
+    {
+        printf("\nLimite maximo de usuarios atingido!\n");
+        return;
+    }
+
+    printf("Digite o nome do usuario: ");
+    fgets(user[usuariosTotais].nome, sizeof(user[usuariosTotais].nome), stdin);
+    removerNovaLinha(user[usuariosTotais].nome);
+
+    printf("Digite o telefone do usuario: ");
+    scanf("%d", &user[usuariosTotais].telefone);
+    limparBufferEntrada();
+
+    printf("Digite o email do usuario: ");
+    fgets(user[usuariosTotais].email, sizeof(user[usuariosTotais].email), stdin);
+    removerNovaLinha(user[usuariosTotais].email);
+
+    user[usuariosTotais].emprestimo = 0;
+
+    IDdoUsuario++;
+    user[usuariosTotais].id = IDdoUsuario;
+
+    usuariosTotais++;
+
+    printf("\nUsuario cadastrado com sucesso! ID: %d\n", user[usuariosTotais - 1].id);
+}
+
+// Lista todos os usuarios cadastrados
+void listarUsuarios()
+{
+    printf("\n--- Lista de Usuarios ---\n");
+
+    if (usuariosTotais == 0)
+    {
+        printf("\nNenhum usuario cadastrado!\n");
+        return;
+    }
+
+    for (int i = 0; i < usuariosTotais; i++)
+    {
+        printf("ID: %d | Nome: %s | Tel: %d | E-mail: %s\n",
+               user[i].id, user[i].nome, user[i].telefone, user[i].email);
+    }
+}
+
+// Busca um usuario pelo ID
+void buscarUsuario()
+{
+    printf("\n--- Busca de Usuario ---\n");
+
+    if (usuariosTotais == 0)
+    {
+        printf("\nNenhum usuario cadastrado!\n");
+        return;
+    }
+
+    int idBusca;
+
+    printf("Digite o ID do usuario que procura: ");
+    scanf("%d", &idBusca);
+    limparBufferEntrada();
+
+    int pos = localizarUsuario(idBusca);
+
+    if (pos != -1)
+    {
+        printf("\nUsuario Encontrado:\n");
+        printf("Nome: %s\nTelefone: %d\nE-mail: %s\n",
+               user[pos].nome, user[pos].telefone, user[pos].email);
+    }
+    else
+    {
+        printf("\nUsuario com o ID %d nao foi encontrado.\n", idBusca);
+    }
+}
+
+// Altera os dados de um usuario existente
+void alterarUsuario()
+{
+    printf("\n--- Alterar Usuario ---\n");
+
+    if (usuariosTotais == 0)
+    {
+        printf("\nNenhum usuario cadastrado!\n");
+        return;
+    }
+
+    int idAlterar;
+
+    printf("Digite o ID do usuario que deseja alterar: ");
+    scanf("%d", &idAlterar);
+    limparBufferEntrada();
+
+    int pos = localizarUsuario(idAlterar);
+
+    if (pos == -1)
+    {
+        printf("\nID nao encontrado.\n");
+        return;
+    }
+
+    printf("Novo nome: ");
+    fgets(user[pos].nome, sizeof(user[pos].nome), stdin);
+    removerNovaLinha(user[pos].nome);
+
+    printf("Novo telefone: ");
+    scanf("%d", &user[pos].telefone);
+    limparBufferEntrada();
+
+    printf("Novo email: ");
+    fgets(user[pos].email, sizeof(user[pos].email), stdin);
+    removerNovaLinha(user[pos].email);
+
+    printf("\nDados alterados com sucesso!\n");
+}
+
+// Exclui um usuario pelo ID
+void excluirUsuario()
+{
+    printf("\n--- Excluir Usuario ---\n");
+
+    if (usuariosTotais == 0)
+    {
+        printf("\nNenhum usuario cadastrado!\n");
+        return;
+    }
+
+    int idExcluir;
+
+    printf("Digite o ID do usuario a ser excluido: ");
+    scanf("%d", &idExcluir);
+    limparBufferEntrada();
+
+    int pos = localizarUsuario(idExcluir);
+
+    if (pos == -1)
+    {
+        printf("\nUsuario nao encontrado.\n");
+        return;
+    }
+
+    for (int j = pos; j < usuariosTotais - 1; j++)
+    {
+        user[j] = user[j + 1];
+    }
+
+    usuariosTotais--;
+
+    printf("\nUsuario excluido com sucesso!\n");
+}
+
+// Submenu de usuarios - agora com o modulo de usuarios implementado
 void gerenciarUsuarios()
 {
     int opcao;
@@ -739,10 +901,40 @@ void gerenciarUsuarios()
             break;
         }
 
-        if (opcao != 0)
+        switch (opcao)
         {
-            printf("\nFuncionalidade de usuarios ainda nao implementada.\n");
-            pausarTela();
+            case 1:
+                cadastroUsuario();
+                pausarTela();
+                break;
+
+            case 2:
+                limpa();
+                listarUsuarios();
+                pausarTela();
+                break;
+
+            case 3:
+                buscarUsuario();
+                pausarTela();
+                break;
+
+            case 4:
+                alterarUsuario();
+                pausarTela();
+                break;
+
+            case 5:
+                excluirUsuario();
+                pausarTela();
+                break;
+
+            case 0:
+                break;
+
+            default:
+                printf("\nOpcao invalida!");
+                pausarTela();
         }
 
     } while (opcao != 0);
