@@ -56,7 +56,7 @@ void Buscar();
 void Listar();
 char BuscarTítulo(char LivroBusca[50]);
 void menudeemprestimo ();
-void emprestimos();
+void emprestimos1();
 void cadastroTitulo();
 void cadastroAutor();
 int cadastroCategoria();
@@ -116,30 +116,6 @@ void menuGerenciarLivros()
 }
 
 void menuGerenciarUsuarios()
-{
-    printf("\n============ GERENCIAMENTO DE LIVROS ============\n");
-    printf("1 - Cadastrar novo Usuario\n");
-    printf("2 - Listar Usuarios\n");
-    printf("3 - Buscar Usuario\n");
-    printf("4 - Alterar Cadastro\n");
-    printf("5 - Excluir Cadastro\n");
-    printf("0 - Voltar ao Menu Principal\n");
-    printf("Escolha: ");
-}
-
-void menuGerenciarLivros ()
-{
-    printf("\n============ GERENCIAMENTO DE LIVROS ============\n");
-    printf("1 - Cadastrar Livro\n");
-    printf("2 - Listar Livros\n");
-    printf("3 - Buscar Livro\n");
-    printf("4 - Alterar Livro\n");
-    printf("5 - Excluir Livro\n");
-    printf("0 - Voltar ao Menu Principal\n");
-    printf("Escolha: ");
-}
-
-void menuGerenciarUsuarios ()
 {
     printf("\n============ GERENCIAMENTO DE LIVROS ============\n");
     printf("1 - Cadastrar novo Usuario\n");
@@ -396,64 +372,65 @@ char BuscarTítulo(char LivroBusca[50])
 
     printf("\nQual o Título do livro que você deseja procurar");
     fgets(LivroBusca, 50, stdin);
+    LivroBusca[strcspn(LivroBusca, "\n")] = 0;
 
     for (int i = 0; i > livrosTotais; i++)
     {
-
+        
         if (strcmp(books[i].titulo, LivroBusca) == 0)
         {
-
+            
             printf("\nLivro encontrado: %s", LivroBusca);
-
+            
             printf("\nId do seu livro: %d", books[i].id);
-
+            
             printf("\nAutor do seu livro: %s", books[i].autor);
-
+            
             printf("\nAno do seu livro: %d", books[i].ano);
-
+            
             printf("\nQuantidade do seu livro: %d", books[i].quantidade);
-
+            
             printf("\nQuantidade disponível do seu livro: %d", books[i].quantidadeDisponivel);
         }
     }
 }
 
 void Alterar(){
-
+    
     int idBusca, encontrado =0;
-
-printf("Digite o ID do livro que deseja alterar:");
-scanf("%d",&idBusca);
-
-limparBufferEntrada();
-
+    
+    printf("Digite o ID do livro que deseja alterar:");
+    scanf("%d",&idBusca);
+    
+    limparBufferEntrada();
+    
     for(int i = 0; i < livrosTotais; i++){
     encontrado = 1;
-
-        if(books[i].id==idBusca){
+    
+    if(books[i].id==idBusca){
         encontrado = 1;
-            printf("\nO livro foi encontrado agora insira os novos dados: ");
+        printf("\nO livro foi encontrado agora insira os novos dados: ");
 
-            printf("\nNovo título: ");
-            fgets(books[i].titulo,100,stdin);
-
-            printf("\nNovo autor: ");
-            fgets(books[i].autor,100,stdin);
-
+        printf("\nNovo título: ");
+        fgets(books[i].titulo,100,stdin);
+        
+        printf("\nNovo autor: ");
+        fgets(books[i].autor,100,stdin);
+        
             printf("\nNovo ano: ");
             scanf("%d",&books[i].ano);
-
+            
             printf("\nNova categoria: ");
             scanf("%d",&books[i].categoria);
-
+            
             printf("\nNova quantidade total: ");
             scanf("%d",&books[i].quantidade);
-
-
+            
+            
             books[i].quantidade = books[i].quantidadeDisponivel;
-
+            
         }
-
+        
     }
 
 }
@@ -480,10 +457,34 @@ int localizarLivro(int idLivro)
             return i;
         }
     }
-
+    
     return -1;
 }
 
+void excluir(){
+
+int idBusca, encontrado = 0;
+
+printf("Digite o ID de busca: ");
+scanf("%d",&idBusca);
+
+limparBufferEntrada();
+
+    for(int i = 0; i < livrosTotais; i++){
+
+        if(books->id == idBusca){
+        encontrado = 1;
+
+            books[i] = books[livrosTotais - 1];
+
+            livrosTotais --;
+
+            printf("Livro excluido");
+            break;
+        }
+
+    }
+}
 
 // usa o id do usuario para localizar o mesmo 
 int localizarUsuario(int idUsuario)
@@ -547,7 +548,7 @@ void registrarEmprestimo()
     // Verifica se o usuario ja possui este livro emprestado
     for(int i = 0; i < emprestimostotais; i++)
     {
-        if(emprestimos [i].idUsuario == idUsuario && emprestimos[i].idLivro == idLivro && emprestimos[i].ativo == 1)
+        if(emprestimos[i].idUsuario == idUsuario && emprestimos[i].idLivro == idLivro && emprestimos[i].ativo == 1)
         {
             printf("\nEste usuario ja possui esse livro!");
             return;
@@ -652,7 +653,7 @@ void listarEmprestimos()
 }
 
 //é tipo uma main de empretimo onde so precia chamar ele na int main
-void emprestimos()
+void emprestimos1()
 {
     int opcao;
 
@@ -690,30 +691,6 @@ void emprestimos()
 
 
 
-void excluir(){
-
-int idBusca, encontrado = 0;
-
-printf("Digite o ID de busca: ");
-scanf("%d",&idBusca);
-
-limparBufferEntrada();
-
-    for(int i = 0; i < livrosTotais; i++){
-
-        if(books->id == idBusca){
-        encontrado = 1;
-
-            books[i] = books[livrosTotais - 1];
-
-            livrosTotais --;
-
-            printf("Livro excluido");
-            break;
-        }
-
-    }
-}
 void estruturaDaMain ()
 {
     int opcao = 0;
@@ -764,7 +741,7 @@ void subMenuRelatorio ()
     limpa ();
     printf ("\n============ RELATORIO ============\n");
     printf ("1 - Relatorio Sobre usuarios");
-    printf ("2 - Relatorios Sobre Livros")
+    printf ("2 - Relatorios Sobre Livros");
     printf ("0 - Voltar ao Menu Principal\n");
     printf ("Escolha: ");   
 }
